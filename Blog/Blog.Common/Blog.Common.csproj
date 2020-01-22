@@ -11,5 +11,9 @@
     <PackageReference Include="Snowflake.Core" Version="2.0.0"/>
     <PackageReference Include="System.Data.SqlClient" Version="4.8.0"/>
     <PackageReference Include="ZKWeb.System.Drawing" Version="4.0.1"/>
+    <PackageReference Include="DapperExtensions.NetCore" Version="2.0.7"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Blog.Entities\Blog.Entities.csproj"/>
   </ItemGroup>
 </Project>

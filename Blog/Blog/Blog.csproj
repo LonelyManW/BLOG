@@ -10,4 +10,7 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0"/>
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0"/>
   </ItemGroup>
+  <ItemGroup>
+  <ProjectReference Include="..\Blog.Common\Blog.Common.csproj" />
+  </ItemGroup>
 </Project>
