@@ -99,5 +99,15 @@ namespace Blog.Common
         {
             Redis.Current.Del(key);
         }
+
+        ///<summary>
+        ///更新key的过期时间
+        ///</summary>
+        /// <param name="key">key</param>
+        /// <param name="cacheDurationInSeconds">过期时间</param>
+        public void Expire(string key, int cacheDurationInSeconds = int.MaxValue)
+        {
+            Redis.Current.Expire(key, cacheDurationInSeconds);
+        }
     }
 }

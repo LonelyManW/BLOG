@@ -16,22 +16,24 @@ namespace Blog.Controllers
     [ApiController]
     public class LoginMangeController : BaseController
     {
-        // private readonly IManageServices _manageServices;
-        // public LoginMangeController(IManageServices manageServices)
-        // {
-        //     _manageServices = manageServices;
-        // }
+        private readonly IManageServices _manageServices;
+        public LoginMangeController(IManageServices manageServices)
+        {
+            _manageServices = manageServices;
+        }
 
         [HttpPost("login")]
-        public IActionResult login()
+        public IActionResult login([FromBody]LoginRequest loginModel)
         {
+            
             DataResponse<dt_manage> res = new DataResponse<dt_manage>()
             {
                 Status = ErrorCode.Code_100,
                 Code = ErrorCode.Code_100,
             };
-            new RedisCache().Add("admin111", "123");
+            
             return GetBaseResponse(res);
         }
+
     }
 }

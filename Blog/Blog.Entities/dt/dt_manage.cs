@@ -10,10 +10,10 @@ namespace Blog.Entities
         private string _name;
         private string _account;
         private string _password;
-        private string _verify_password;
         private string _ip;
         private string _email;
         private string _phone;
+        private string _img;
         private int _state = 1;
         private int _status = 1;
         private DateTime _login_time = DateTime.Now;
@@ -54,14 +54,6 @@ namespace Blog.Entities
             set => _password = value;
         }
         /// <summary>
-        /// 确认密码
-        /// </summary>
-        public string verify_password
-        {
-            get => _verify_password;
-            set => _verify_password = value;
-        }
-        /// <summary>
         /// ip
         /// </summary>
         public string ip
@@ -84,6 +76,14 @@ namespace Blog.Entities
         {
             get => _phone;
             set => _phone = value;
+        }
+        ///<summary>
+        ///头像
+        ///</summary>
+        public string img
+        {
+            get => _img;
+            set => _img = value;
         }
         /// <summary>
         /// 状态0-禁用，1-正常

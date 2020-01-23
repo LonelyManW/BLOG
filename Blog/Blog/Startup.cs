@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NLog.Extensions.Logging;
 using NLog.Web;
+using Blog.Entities;
 
 namespace Blog
 {
@@ -36,18 +37,51 @@ namespace Blog
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            #region 模型验证注入
+            //模型绑定 特性验证，自定义返回格式
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    //获取验证失败的模型字段 
+                    var errorList = actionContext.ModelState
+                    .Where(e => e.Value.Errors.Count > 0)
+                    .Select(e => e.Value.Errors.First().ErrorMessage)
+                    .ToList();
+                    //设置返回内容
+                    BaseResponse result = new BaseResponse()
+                    {
+                        Code = ErrorCode.Code_100,
+                        Status = ErrorCode.Code_100
+                    };
+                    if (errorList.Count > 0)
+                    {
+                        Dictionary<string, string> dic = new Dictionary<string, string>();
+                        var errors=errorList.Distinct();
+                        foreach (var item in errors)
+                        {
+                            dic.Add(item, WebUtil.GetMsg(item, HttpHelper.GetLanguageCode()));
+                        }
+                        result.ErrorList = dic;
+                    }
+                    result.Msg = WebUtil.GetMsg(result.Code, HttpHelper.GetLanguageCode());
+                    return new BadRequestObjectResult(result);
+                };
+            });
+            #endregion
         }
 
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            Assembly service =Assembly.Load("Blog.Services");
-            Assembly repository =Assembly.Load("Blog.Repository");
+            Assembly service = Assembly.Load("Blog.Services");
+            Assembly repository = Assembly.Load("Blog.Repository");
 
-            builder.RegisterAssemblyTypes(service,repository)
+            builder.RegisterAssemblyTypes(service, repository)
            .Where(t => t.Name.EndsWith("Services")).AsImplementedInterfaces();
 
-            builder.RegisterAssemblyTypes(service,repository)
+            builder.RegisterAssemblyTypes(service, repository)
            .Where(t => t.Name.EndsWith("Repository")).AsImplementedInterfaces();
         }
 

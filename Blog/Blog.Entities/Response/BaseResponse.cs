@@ -22,6 +22,11 @@ namespace Blog.Entities
         /// </summary>
         [JsonProperty(PropertyName = "msg")]
         public string Msg { get; set; }
+        /// <summary>
+        /// 模型验证失败时
+        /// </summary>
+        [JsonProperty(PropertyName = "msg")]
+        public Dictionary<string,string> ErrorList{ get; set; }
     }
 
 
