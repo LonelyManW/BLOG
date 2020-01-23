@@ -6,6 +6,13 @@ namespace Blog.Common
 {
     public class RedisCache : ICache
     {
+        ///<summary>
+        ///连接redis
+        ///</summary>
+        public RedisCache()
+        {
+            Redis.Initialization();
+        }
         /// <summary>
         /// 添加缓存
         /// </summary>

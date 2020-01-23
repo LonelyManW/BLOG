@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System.IO;
+using Blog.Entities;
+using Blog.Common;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Blog
 {
@@ -13,6 +13,7 @@ namespace Blog
     {
         public static void Main(string[] args)
         {
+            Init();
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -21,6 +22,25 @@ namespace Blog
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+                .UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+        ///<summary>
+        ///初始化返回提示码
+        ///</summary>
+        public static void Init()
+        {
+            string path = Directory.GetCurrentDirectory();
+            DirectoryInfo dir = new DirectoryInfo(path + @"\Configs\");
+            FileInfo[] fs = dir.GetFiles("Code_*.json");
+            ErrorCodeMsg.CodeMsg = new Dictionary<string, CodeMessage>();
+            foreach (var item in fs)
+            {
+                var codeMsg = WebUtil.DeserializeObject<CodeMessage>(item.ToString());
+                ErrorCodeMsg.CodeMsg.Add(codeMsg.Language.ToLower(), codeMsg);
+            }
+
+        }
+
     }
 }

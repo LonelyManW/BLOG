@@ -9,8 +9,12 @@
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1"/>
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0"/>
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0"/>
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.6.1"/>
   </ItemGroup>
   <ItemGroup>
-  <ProjectReference Include="..\Blog.Common\Blog.Common.csproj" />
+    <ProjectReference Include="..\Blog.Common\Blog.Common.csproj"/>
+    <ProjectReference Include="..\Blog.Core\Blog.Core.csproj"/>
+    <ProjectReference Include="..\Blog.Services\Blog.Services.csproj"/>
+    <ProjectReference Include="..\Blog.Repository\Blog.Repository.csproj"/>
   </ItemGroup>
 </Project>

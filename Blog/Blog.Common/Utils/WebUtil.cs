@@ -8,8 +8,6 @@ using System.Text;
 
 namespace Blog.Common
 {
-
-
     public class WebUtil
     {
         /// <summary>
